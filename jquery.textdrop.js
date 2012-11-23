@@ -7,6 +7,21 @@
 ////  $(paragraph).textdrop({options},[callback]);  ////
 ////////////////////////////////////////////////////////
 
+/*
+
+Options can be:
+{
+   type: "word", // animate by word.
+   duration: 2000,
+   fontSize: 40, //start animation with font on this size
+   easing: "easeBounceOut",
+   delay: 3000 ///start animating after this delay
+}
+
+You are not allowed to have anything in the element other than letters and <br> elements.
+
+*/
+
 ;(function($, undefined){
 "use strict";
 
