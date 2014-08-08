@@ -76,7 +76,8 @@ $.fn.textdrop = function(options, externalCall) {
 
 	this.each(function(index) {
 
-		var self = $(this),
+		var
+			self = $(this),
 			parent = self.parent(),
 			flyingArray = [],
 			array = [],
@@ -116,9 +117,9 @@ $.fn.textdrop = function(options, externalCall) {
 			textShadow: self.css('text-shadow'),
 			fontWeight: self.css('font-weight')
 		};
-		
+
 		mouse.stopped = false;
-		
+
 		self.empty();
 
 		/// Splits paragraph into spans of word/letters
@@ -132,7 +133,7 @@ $.fn.textdrop = function(options, externalCall) {
 							.appendTo(self);
 			}
 		}
-		
+
 		///set letter/word *kounter
 		k = -1;
 
@@ -141,14 +142,14 @@ $.fn.textdrop = function(options, externalCall) {
 		function animateSpan() {
 			var pos, el, flying, animObj;
 			k++;
-			
+
 			el = children[k];
 			pos = $(el).offset();
-			
+
 			if (!doc.contains(self[0]) || pos === undefined) { ///if elements are not on document anymore
 				return false;
 			}
-			
+
 
 			if (k >= array.length) return;
 
@@ -169,23 +170,24 @@ $.fn.textdrop = function(options, externalCall) {
 									fontFamily: originalStyle.family,
 									fontSize: leFont,
 									textShadow: originalStyle.textShadow,
-									fontWeight: originalStyle.fontWeight
+									fontWeight: originalStyle.fontWeight,
+									transform: "translateZ(0)"
 								})
 							.data('eq', el); //saves a reference of original span on data-eq
-				
+
 			animObj = {top: pos.top, left: pos.left, fontSize: originalStyle.size};
 			if (originalStyle.fontSize === leFont) delete animObj.fontSize;
-			
+
 			flying.appendTo(parent);
 			flyingArray.push(flying);
-			
+
 			if (k === array.length-1) { ///its last character of element
 
 				collectionLength--;
 				if (collectionLength === 0) { // if it's last character of last element
 					flying.animate(animObj, duration, easing, callback);
 					return;
-	
+
 				} else { ///last character not last element
 
 					flying.animate(animObj, duration, easing, halt);
@@ -193,7 +195,7 @@ $.fn.textdrop = function(options, externalCall) {
 						clearTimeout(t.letter);
 						t.letter = setTimeout(animateSpan, 200);
 					}
-				
+
 				}
 
 			} else { /// animate characters
@@ -205,7 +207,7 @@ $.fn.textdrop = function(options, externalCall) {
 					///time between letters
 					t.letter = setTimeout(animateSpan, 200);
 				}
-				
+
 			} //// animate flying
 		}
 
@@ -249,7 +251,7 @@ $.fn.textdrop = function(options, externalCall) {
 				$(doc).one('mousemove.textdrop', animateSpan);
 			}, 100); ///how long the mouse pointer should be stopped to consider a mousestop
 		}
-		
+
 		function onTouchStart(e) {
 			animateSpan();
 		}
